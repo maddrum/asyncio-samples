@@ -1,7 +1,7 @@
 import asyncio
 import datetime
 
-from coroutines import calc_something
+from coroutines import async_calculator
 
 background_tasks = set()
 
@@ -16,7 +16,7 @@ async def tasker():
 
     for item in range(10):
         print(f"task item {item}")
-        task = asyncio.create_task(calc_something(item))
+        task = asyncio.create_task(async_calculator(item))
         background_tasks.add(task)
         print(f"set is: {len(background_tasks)}")
         task.add_done_callback(print_set_state)
