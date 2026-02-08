@@ -6,7 +6,7 @@ from coroutines import calc_something
 background_tasks = set()
 
 
-def print_set_state(task):
+def print_set_state(task: asyncio.Task):
     print(f"set is: {len(background_tasks)}")
     background_tasks.discard(task)
 
@@ -31,6 +31,6 @@ if __name__ == "__main__":
     asyncio.run(tasker())
 
     end = datetime.datetime.now()
-    print('Final set is:',len(background_tasks))
+    print("Final set is:", len(background_tasks))
     print("=" * 20)
     print(f"Total time: {end - start}")

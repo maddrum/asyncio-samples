@@ -3,7 +3,7 @@ import random
 from math import sqrt
 
 
-async def subroutine(routine_nr: int):
+async def subroutine(routine_nr: int) -> None:
     print(f"subroutine: {routine_nr}")
     sleeping_time = random.randint(1, 5)
     await asyncio.sleep(sleeping_time)
@@ -12,7 +12,7 @@ async def subroutine(routine_nr: int):
     print(f"subroutine {routine_nr} ended")
 
 
-async def calc_something(routine_nr: int):
+async def calc_something(routine_nr: int) -> None:
     print(f"calc_something: {routine_nr}")
     sum = 0
     for item in range(random.randint(10_000_000, 100_000_000)):
@@ -21,7 +21,7 @@ async def calc_something(routine_nr: int):
     print(f"calc_something {routine_nr} ended")
 
 
-async def routine(routine_nr: int):
+async def routine(routine_nr: int) -> None:
     print(f"routine: {routine_nr}")
     sleeping_time = random.randint(1, 5)
     await asyncio.sleep(sleeping_time)

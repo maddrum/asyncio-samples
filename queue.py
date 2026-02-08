@@ -7,7 +7,7 @@ from coroutines import routine
 item = 0
 
 
-async def producer(queue, shutdown_event):
+async def producer(queue: asyncio.Queue, shutdown_event: asyncio.Event):
     global item
     while True:
         if shutdown_event.is_set():
@@ -20,7 +20,7 @@ async def producer(queue, shutdown_event):
         item += 1
 
 
-async def consumer(queue, producer_task):
+async def consumer(queue: asyncio.Queue, producer_task: asyncio.Task):
     while True:
         if producer_task.done() and queue.empty():
             print("Producer stopped - cancelling consumer")
