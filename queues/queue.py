@@ -2,7 +2,7 @@ import asyncio
 import datetime
 import signal
 
-from coroutines import routine
+from coroutines.coroutines import my_routine
 
 item = 0
 
@@ -27,7 +27,7 @@ async def consumer(queue: asyncio.Queue, producer_task: asyncio.Task):
             break
         item = await queue.get()
         print(f"Just got item: {item}")
-        await routine(item)
+        await my_routine(item)
 
 
 async def main():
