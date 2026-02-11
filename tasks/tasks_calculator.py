@@ -1,17 +1,12 @@
 import asyncio
 import datetime
 
-from coroutines import async_calculator
-
-background_tasks = set()
-
-
-def print_set_state(task: asyncio.Task):
-    print(f"set is: {len(background_tasks)}")
-    background_tasks.discard(task)
+from coroutines.coroutines import async_calculator
+from tasks.common import update_set_state
 
 
 async def tasker():
+    background_tasks = set()
     print("tasker in")
 
     for item in range(10):
@@ -19,7 +14,10 @@ async def tasker():
         task = asyncio.create_task(async_calculator(item))
         background_tasks.add(task)
         print(f"set is: {len(background_tasks)}")
-        task.add_done_callback(print_set_state)
+        task.add_done_callback(lambda t: update_set_state(t, background_tasks))
+
+    if background_tasks:
+        await asyncio.wait(background_tasks)
 
     print("-" * 20)
     print("tasker out")
@@ -31,6 +29,6 @@ if __name__ == "__main__":
     asyncio.run(tasker())
 
     end = datetime.datetime.now()
-    print("Final set is:", len(background_tasks))
+
     print("=" * 20)
     print(f"Total time: {end - start}")

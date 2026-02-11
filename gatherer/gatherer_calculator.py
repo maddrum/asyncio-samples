@@ -1,12 +1,12 @@
 import asyncio
 import datetime
 
-from coroutines import routine
+from coroutines.coroutines import async_calculator
 
 
 async def gatherer():
     print("gatherer in")
-    tasks = [routine(item) for item in range(10)]
+    tasks = [async_calculator(item) for item in range(10)]
     await asyncio.gather(*tasks)
     print("-" * 20)
     print("gatherer out")
