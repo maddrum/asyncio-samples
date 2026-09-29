@@ -1,3 +1,12 @@
+"""Asyncio + ProcessPoolExecutor: the correct way to do CPU-bound work
+from async code.
+
+`loop.run_in_executor` submits `calculator` to a process pool, so the
+event loop stays responsive AND the CPU work runs in parallel across
+processes. Compare with synced.py (sequential) and tasks_calculator.py
+(blocked event loop).
+"""
+
 import asyncio
 import datetime
 from concurrent.futures import ProcessPoolExecutor
@@ -6,6 +15,7 @@ from cpu_loaders.calculator import calculator
 
 
 async def dispatcher():
+    """Submit 10 calculator jobs to a process pool and await all."""
     loop = asyncio.get_running_loop()
 
     with ProcessPoolExecutor(max_workers=10) as executor:
@@ -17,6 +27,7 @@ async def dispatcher():
             task = loop.run_in_executor(executor, calculator, item)
             tasks.append(task)
 
+        # Await all futures: the loop is free while processes crunch.
         # Тук вече изчакваме всички задачи да приключат паралелно
         await asyncio.gather(*tasks)
 

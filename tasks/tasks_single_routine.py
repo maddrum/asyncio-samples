@@ -1,3 +1,10 @@
+"""Minimal demo: a single create_task + await.
+
+Shows that create_task returns immediately (the task is scheduled, not
+run to completion), and that you must `await` the task or it may be
+cancelled when the event loop shuts down.
+"""
+
 import asyncio
 import datetime
 
@@ -5,6 +12,7 @@ from coroutines.coroutines import my_routine
 
 
 async def tasker_with_single_coroutine():
+    """Schedule one sleeping routine as a task and await its completion."""
     print("tasker_with_single_coroutine in")
 
     item = 5
